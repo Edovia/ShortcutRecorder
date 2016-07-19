@@ -15,24 +15,24 @@
 }
 
 + (id)clearKeyCombo;
-+ (id)keyComboWithKeyCode: (NSInteger)keyCode modifiers: (NSUInteger)modifiers;
-- (id)initWithKeyCode: (NSInteger)keyCode modifiers: (NSUInteger)modifiers;
++ (instancetype)keyComboWithKeyCode: (NSInteger)keyCode modifiers: (NSUInteger)modifiers;
+- (instancetype)initWithKeyCode: (NSInteger)keyCode modifiers: (NSUInteger)modifiers NS_DESIGNATED_INITIALIZER;
 
-- (id)initWithPlistRepresentation: (id)plist;
-- (id)plistRepresentation;
+- (instancetype)initWithPlistRepresentation: (id)plist;
+@property (NS_NONATOMIC_IOSONLY, readonly, strong) id plistRepresentation;
 
 - (BOOL)isEqual: (PTKeyCombo*)combo;
 
-- (NSInteger)keyCode;
-- (NSUInteger)modifiers;
+@property (NS_NONATOMIC_IOSONLY, readonly) NSInteger keyCode;
+@property (NS_NONATOMIC_IOSONLY, readonly) NSUInteger modifiers;
 
-- (BOOL)isClearCombo;
-- (BOOL)isValidHotKeyCombo;
+@property (NS_NONATOMIC_IOSONLY, getter=isClearCombo, readonly) BOOL clearCombo;
+@property (NS_NONATOMIC_IOSONLY, getter=isValidHotKeyCombo, readonly) BOOL validHotKeyCombo;
 
 @end
 
 
 @interface PTKeyCombo (UserDisplayAdditions)
-- (NSString*)keyCodeString;
-- (NSUInteger)modifierMask;
+@property (NS_NONATOMIC_IOSONLY, readonly, copy) NSString *keyCodeString;
+@property (NS_NONATOMIC_IOSONLY, readonly) NSUInteger modifierMask;
 @end

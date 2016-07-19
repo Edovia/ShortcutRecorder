@@ -16,12 +16,12 @@
 	return [self keyComboWithKeyCode: -1 modifiers: -1];
 }
 
-+ (id)keyComboWithKeyCode: (NSInteger)keyCode modifiers: (NSUInteger)modifiers
++ (instancetype)keyComboWithKeyCode: (NSInteger)keyCode modifiers: (NSUInteger)modifiers
 {
 	return [[self alloc] initWithKeyCode: keyCode modifiers: modifiers];
 }
 
-- (id)initWithKeyCode: (NSInteger)keyCode modifiers: (NSUInteger)modifiers
+- (instancetype)initWithKeyCode: (NSInteger)keyCode modifiers: (NSUInteger)modifiers
 {
 	self = [super init];
 
@@ -62,7 +62,7 @@
 	return self;
 }
 
-- (id)initWithPlistRepresentation: (id)plist
+- (instancetype)initWithPlistRepresentation: (id)plist
 {
 	int keyCode, modifiers;
 
@@ -73,10 +73,10 @@
 	}
 	else
 	{
-		keyCode = [[plist objectForKey: @"keyCode"] intValue];
+		keyCode = [plist[@"keyCode"] intValue];
 		if( keyCode < 0 ) keyCode = -1;
 
-		modifiers = [[plist objectForKey: @"modifiers"] intValue];
+		modifiers = [plist[@"modifiers"] intValue];
 		if( modifiers <= 0 ) modifiers = -1;
 	}
 
@@ -85,10 +85,8 @@
 
 - (id)plistRepresentation
 {
-	return [NSDictionary dictionaryWithObjectsAndKeys:
-				[NSNumber numberWithInteger: [self keyCode]], @"keyCode",
-				[NSNumber numberWithInteger: [self modifiers]], @"modifiers",
-				nil];
+	return @{@"keyCode": @([self keyCode]),
+				@"modifiers": [NSNumber numberWithInteger: [self modifiers]]};
 }
 
 - (id)copyWithZone:(NSZone*)zone;

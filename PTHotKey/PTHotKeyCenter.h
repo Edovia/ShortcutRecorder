@@ -30,7 +30,7 @@
 - (BOOL)registerHotKey: (PTHotKey*)hotKey;
 - (void)unregisterHotKey: (PTHotKey*)hotKey;
 
-- (NSArray*)allHotKeys;
+@property (NS_NONATOMIC_IOSONLY, readonly, copy) NSArray *allHotKeys;
 - (PTHotKey*)hotKeyWithIdentifier: (id)ident;
 
 - (void)sendEvent: (NSEvent*)event;
@@ -39,6 +39,6 @@
 
 - (void)resume;
 
-- (BOOL)isPaused;
+@property (NS_NONATOMIC_IOSONLY, getter=isPaused, readonly) BOOL paused;
 
 @end

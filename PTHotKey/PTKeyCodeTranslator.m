@@ -27,7 +27,7 @@
     return current;
 }
 
-- (id)initWithKeyboardLayout:(TISInputSourceRef)aLayout
+- (instancetype)initWithKeyboardLayout:(TISInputSourceRef)aLayout
 {
     if ((self = [super init]) != nil) {
         keyboardLayout = aLayout;
@@ -43,7 +43,6 @@
 
 - (void)dealloc
 {
-    [super dealloc];
 	CFRelease(keyboardLayout);
 
 }

@@ -34,7 +34,7 @@ static PTHotKeyCenter *_sharedHotKeyCenter = nil;
 	return _sharedHotKeyCenter;
 }
 
-- (id)init
+- (instancetype)init
 {
 	self = [super init];
 
@@ -80,7 +80,7 @@ static PTHotKeyCenter *_sharedHotKeyCenter = nil;
         [hotKey setCarbonEventHotKeyRef:carbonHotKey];
 
         if( hotKey )
-            [mHotKeys setObject: hotKey forKey: [NSNumber numberWithInteger:hotKeyID.id]];
+            mHotKeys[[NSNumber numberWithInteger:hotKeyID.id]] = hotKey;
 
         [self _updateEventHandler];
     }
@@ -90,7 +90,7 @@ static PTHotKeyCenter *_sharedHotKeyCenter = nil;
         [hotKey setCarbonHotKeyID:hotKeyID.id];
 
         if( hotKey )
-            [mHotKeys setObject: hotKey forKey: [NSNumber numberWithInteger:hotKeyID.id]];
+            mHotKeys[[NSNumber numberWithInteger:hotKeyID.id]] = hotKey;
     }
     return YES;
 }
@@ -132,7 +132,7 @@ static PTHotKeyCenter *_sharedHotKeyCenter = nil;
 
 - (NSArray*)allHotKeys
 {
-	return [mHotKeys allValues];
+	return mHotKeys.allValues;
 }
 
 - (PTHotKey*)hotKeyWithIdentifier: (id)ident
@@ -170,12 +170,12 @@ static PTHotKeyCenter *_sharedHotKeyCenter = nil;
 
 - (PTHotKey*)_hotKeyForCarbonHotKeyID: (EventHotKeyID)hotKeyID
 {
-	return [mHotKeys objectForKey:[NSNumber numberWithInteger:hotKeyID.id]];
+	return mHotKeys[[NSNumber numberWithInteger:hotKeyID.id]];
 }
 
 - (void)_updateEventHandler
 {
-	if( [mHotKeys count] && mEventHandlerInstalled == NO )
+	if( mHotKeys.count && mEventHandlerInstalled == NO )
 	{
 		EventTypeSpec eventSpec[2] = {
 			{ kEventClassKeyboard, kEventHotKeyPressed },
@@ -207,13 +207,13 @@ static PTHotKeyCenter *_sharedHotKeyCenter = nil;
 	short subType;
 	EventHotKeyRef carbonHotKey;
 
-	if( [event type] == NSSystemDefined )
+	if( event.type == NSSystemDefined )
 	{
-		subType = [event subtype];
+		subType = event.subtype;
 
 		if( subType == 6 ) //6 is hot key down
 		{
-			carbonHotKey= (EventHotKeyRef)[event data1]; //data1 is our hot key ref
+			carbonHotKey= (EventHotKeyRef)event.data1; //data1 is our hot key ref
 			if( carbonHotKey != nil )
 			{
 				PTHotKey* hotKey = [self _hotKeyForCarbonHotKey: carbonHotKey];
@@ -222,7 +222,7 @@ static PTHotKeyCenter *_sharedHotKeyCenter = nil;
 		}
 		else if( subType == 9 ) //9 is hot key up
 		{
-			carbonHotKey= (EventHotKeyRef)[event data1];
+			carbonHotKey= (EventHotKeyRef)event.data1;
 			if( carbonHotKey != nil )
 			{
 				PTHotKey* hotKey = [self _hotKeyForCarbonHotKey: carbonHotKey];
@@ -284,7 +284,7 @@ static PTHotKeyCenter *_sharedHotKeyCenter = nil;
     mIsPaused = YES;
     for (NSNumber *hotKeyID in mHotKeys)
     {
-        PTHotKey *hotKey = [mHotKeys objectForKey:hotKeyID];
+        PTHotKey *hotKey = mHotKeys[hotKeyID];
         EventHotKeyRef carbonHotKey = [hotKey carbonEventHotKeyRef];
         UnregisterEventHotKey( carbonHotKey );
         [hotKey setCarbonEventHotKeyRef:NULL];
@@ -305,7 +305,7 @@ static PTHotKeyCenter *_sharedHotKeyCenter = nil;
     mIsPaused = NO;
     for (NSNumber *hotKeyIDNumber in mHotKeys)
     {
-        PTHotKey *hotKey = [mHotKeys objectForKey:hotKeyIDNumber];
+        PTHotKey *hotKey = mHotKeys[hotKeyIDNumber];
         EventHotKeyRef carbonHotKey = NULL;
         EventHotKeyID hotKeyID;
         hotKeyID.signature = 'PTHk';

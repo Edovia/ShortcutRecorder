@@ -13,18 +13,18 @@
 
 @implementation PTHotKey
 
-- (id)init
+- (instancetype)init
 {
     return [self initWithIdentifier: nil keyCombo: nil withObject:nil];
 }
 
-- (id)initWithIdentifier: (id)identifier keyCombo: (PTKeyCombo*)combo
+- (instancetype)initWithIdentifier: (id)identifier keyCombo: (PTKeyCombo*)combo
 {
     return [self initWithIdentifier: identifier keyCombo: combo withObject:nil];
 
 }
 
-- (id)initWithIdentifier: (id)identifier keyCombo: (PTKeyCombo*)combo withObject: (id)object
+- (instancetype)initWithIdentifier: (id)identifier keyCombo: (PTKeyCombo*)combo withObject: (id)object
 {
     self = [super init];
 

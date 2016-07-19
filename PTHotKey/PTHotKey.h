@@ -26,33 +26,24 @@
 	EventHotKeyRef	mCarbonEventHotKeyRef;
 }
 
-- (id)initWithIdentifier: (id)identifier keyCombo: (PTKeyCombo*)combo;
-- (id)initWithIdentifier: (id)identifier keyCombo: (PTKeyCombo*)combo withObject: (id)object;
-- (id)init;
+- (instancetype)initWithIdentifier: (id)identifier keyCombo: (PTKeyCombo*)combo;
+- (instancetype)initWithIdentifier: (id)identifier keyCombo: (PTKeyCombo*)combo withObject: (id)object NS_DESIGNATED_INITIALIZER;
+- (instancetype)init;
 
-- (void)setIdentifier: (id)ident;
-- (id)identifier;
+@property (NS_NONATOMIC_IOSONLY, strong) id identifier;
 
-- (void)setName: (NSString*)name;
-- (NSString*)name;
+@property (NS_NONATOMIC_IOSONLY, copy) NSString *name;
 
-- (void)setKeyCombo: (PTKeyCombo*)combo;
-- (PTKeyCombo*)keyCombo;
+@property (NS_NONATOMIC_IOSONLY, copy) PTKeyCombo *keyCombo;
 
-- (void)setTarget: (id)target;
-- (id)target;
-- (void)setObject: (id)object;
-- (id)object;
-- (void)setAction: (SEL)action;
-- (SEL)action;
-- (void)setKeyUpAction: (SEL)action;
-- (SEL)keyUpAction;
+@property (NS_NONATOMIC_IOSONLY, assign) id target;
+@property (NS_NONATOMIC_IOSONLY, strong) id object;
+@property (NS_NONATOMIC_IOSONLY) SEL action;
+@property (NS_NONATOMIC_IOSONLY) SEL keyUpAction;
 
-- (UInt32)carbonHotKeyID;
-- (void)setCarbonHotKeyID: (UInt32)hotKeyID;
+@property (NS_NONATOMIC_IOSONLY) UInt32 carbonHotKeyID;
 
-- (EventHotKeyRef)carbonEventHotKeyRef;
-- (void)setCarbonEventHotKeyRef:(EventHotKeyRef)hotKeyRef;
+@property (NS_NONATOMIC_IOSONLY) EventHotKeyRef carbonEventHotKeyRef;
 
 - (void)invoke;
 - (void)uninvoke;

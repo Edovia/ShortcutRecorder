@@ -26,8 +26,8 @@
                             action:(SEL)anAction
                         withObject:(id)anObject
 {
-    NSInteger keyCode = [[aKeyCombo objectForKey:@"keyCode"] integerValue];
-    NSUInteger modifiers = SRCocoaToCarbonFlags([[aKeyCombo objectForKey:@"modifierFlags"] unsignedIntegerValue]);
+    NSInteger keyCode = [aKeyCombo[@"keyCode"] integerValue];
+    NSUInteger modifiers = SRCocoaToCarbonFlags([aKeyCombo[@"modifierFlags"] unsignedIntegerValue]);
     PTKeyCombo *newKeyCombo = [[PTKeyCombo alloc] initWithKeyCode:keyCode modifiers:modifiers];
     PTHotKey *newHotKey = [[PTHotKey alloc] initWithIdentifier:anIdentifier keyCombo:newKeyCombo];
     [newHotKey setTarget:aTarget];
